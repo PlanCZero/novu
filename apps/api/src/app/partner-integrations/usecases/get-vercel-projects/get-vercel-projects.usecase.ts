@@ -15,7 +15,7 @@ export class GetVercelProjects {
   constructor(private httpService: HttpService, private organizationRepository: OrganizationRepository) {}
 
   async execute(command: GetVercelProjectsCommand) {
-    const configuration = await this.getVercelConfiguration({
+    const configuration = await this.getVercelConfiguration(command.environmentId, {
       configurationId: command.configurationId,
       userId: command.userId,
     });
@@ -24,13 +24,14 @@ export class GetVercelProjects {
       throw new ApiException();
     }
 
-    const projects = await this.getVercelProjects(configuration.accessToken, configuration.teamId);
+    const projects = await this.getVercelProjects(configuration.accessToken, configuration.teamId, command.nextPage);
 
     return projects;
   }
 
-  async getVercelConfiguration(payload: IGetVercelConfiguration) {
+  async getVercelConfiguration(environmentId: string, payload: IGetVercelConfiguration) {
     const organization = await this.organizationRepository.findPartnerConfigurationDetails(
+      environmentId,
       payload.userId,
       payload.configurationId
     );
@@ -41,16 +42,26 @@ export class GetVercelProjects {
     };
   }
 
-  private async getVercelProjects(accessToken: string, teamId: string | null) {
+  private async getVercelProjects(accessToken: string, teamId: string | null, until?: string) {
+    let queryParams = '';
+
+    if (teamId) {
+      queryParams += `teamId=${teamId}&`;
+    }
+
+    if (until) {
+      queryParams += `until=${until}`;
+    }
+
     const response = await lastValueFrom(
-      this.httpService.get(`${process.env.VERCEL_BASE_URL}/v4/projects${teamId ? `?teamId=${teamId}` : ''}`, {
+      this.httpService.get(`${process.env.VERCEL_BASE_URL}/v4/projects${queryParams ? `?${queryParams}` : ''}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
     );
 
-    return this.mapProjects(response.data.projects);
+    return { projects: this.mapProjects(response.data.projects), pagination: response.data.pagination };
   }
 
   private mapProjects(projects) {
