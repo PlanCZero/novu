@@ -19,7 +19,7 @@ import {
 } from '@novu/notification-center';
 
 function Header() {
-  function onNotificationClick(notification: IMessage) {
+  function onNotificationClick(message: IMessage) {
     // your logic to handle the notification click
     if (message?.cta?.data?.url) {
       window.location.href = message.cta.data.url;
@@ -98,7 +98,7 @@ Use `position` prop to position the popover relative to the Bell icon
 | Prop     | Type                                                                                                                                                               | Default      | Description                                       |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | ------------------------------------------------- |
 | position | 'top' \| 'bottom' \| 'left' \| 'right' \| 'top-start' \| 'top-end' \| 'bottom-start' \| 'bottom-end' \| 'left-start' \| 'left-end' \| 'right-start' \| 'right-end' | 'bottom-end' | Position of the popover relative to the bell icon |
-| offset   | number                                                                                                                                                             |              | Gap between the Bell icon and Popover in px       |
+| offset   | number                                                                                                                                                             | 0            | Gap between the Bell icon and Popover in px       |
 
 ## Custom UI
 
@@ -267,6 +267,12 @@ The `i18n` prop can accept 2 different types of values
     },
   }}
   ```
+
+:::info
+
+Novu uses _en_ as default value for i18n
+
+:::
 
 ## The notification `IMessage` model
 
@@ -437,7 +443,7 @@ Then pass the created HMAC to your client side application forward it to the com
 <NovuProvider
   subscriberId={'PLAIN_TEXT_ID'}
   subscriberHash={'HASHED_SUBSCRIBER_ID'}
-  applicationIdentifier={'APP_ID'}
+  applicationIdentifier={'APP_ID_FROM_ADMIN_PANEL'}
 ></NovuProvider>
 ```
 
@@ -635,3 +641,24 @@ By default, Novu will show the subscriber preferences cog icon on the notificati
 If you want to hide it, you can use the prop `showUserPreferences` on the `PopoverNotificationCenter` component.
 
 ![Notification Center with a cog](/img/notification-list-cog.png)
+
+## FAQ
+
+<details>
+ <summary> Notification center is not loading properly</summary>
+
+Possible causes for the notification center not loading properly:
+
+- Invalid subscriberId
+- Invalid applicationIdentifier
+- Invalid backendUrl (in case of self hosted)
+- Invalid socketUrl (in case of self hosted)
+
+</details>
+
+<details>
+ <summary>There is render error due to Notification center</summary>
+
+Notification center should be wrapped in <code>NovuProvider</code>
+
+</details>

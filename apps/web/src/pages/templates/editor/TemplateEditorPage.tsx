@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import PageContainer from '../../../components/layout/components/PageContainer';
 import PageMeta from '../../../components/layout/components/PageMeta';
-import { IForm, useTemplateController } from '../../../components/templates/use-template-controller.hook';
+import { IForm, useTemplateController } from '../../../components/templates/useTemplateController';
 import { useActiveIntegrations } from '../../../api/hooks';
-import { useEnvController } from '../../../store/use-env-controller';
+import { useEnvController } from '../../../store/useEnvController';
 import WorkflowEditorPage from '../workflow/WorkflowEditorPage';
 import { TemplateEditor } from '../../../components/templates/TemplateEditor';
 import { TemplateSettings } from '../../../components/templates/TemplateSettings';
 import { TemplatePageHeader } from '../../../components/templates/TemplatePageHeader';
 import { ReactFlowProvider } from 'react-flow-renderer';
 import { TemplateTriggerModal } from '../../../components/templates/TemplateTriggerModal';
-import { usePrompt } from '../../../hooks/use-prompt';
+import { usePrompt } from '../../../hooks/usePrompt';
 import { UnsavedChangesModal } from '../../../components/templates/UnsavedChangesModal';
 import { When } from '../../../components/utils/When';
 import { UserPreference } from '../../user-preference/UserPreference';
@@ -19,6 +19,8 @@ import { TestWorkflowModal } from '../../../components/templates/TestWorkflowMod
 import { SaveChangesModal } from '../../../components/templates/SaveChangesModal';
 import { useDisclosure } from '@mantine/hooks';
 import { ExecutionDetailsModalWrapper } from '../../../components/templates/ExecutionDetailsModalWrapper';
+import { useSearchParams } from '../../../hooks/useSearchParams';
+import { BlueprintModal } from '../../../components/templates/BlueprintModal';
 
 export enum ActivePageEnum {
   SETTINGS = 'Settings',
@@ -58,7 +60,6 @@ export default function TemplateEditorPage() {
     onTriggerModalDismiss,
   } = useTemplateController(templateId);
   const isCreateTemplatePage = location.pathname === '/templates/create';
-
   const [showModal, confirmNavigation, cancelNavigation] = usePrompt(isDirty);
 
   const [testWorkflowModalOpened, { close: closeTestWorkflowModal, open: openTestWorkflowModal }] = useDisclosure(
@@ -71,6 +72,17 @@ export default function TemplateEditorPage() {
   );
   const [saveChangesModalOpened, { close: closeSaveChangesModal, open: openSaveChangesModal }] = useDisclosure(false);
   const [executionModalOpened, { close: closeExecutionModal, open: openExecutionModal }] = useDisclosure(false);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const page = searchParams.page;
+    if (page !== ActivePageEnum.WORKFLOW) {
+      return;
+    }
+
+    setActivePage(page);
+  }, [searchParams.page]);
 
   const onConfirmSaveChanges = async (data: IForm) => {
     await onSubmit(data);
@@ -187,6 +199,7 @@ export default function TemplateEditorPage() {
         cancelNavigation={cancelNavigation}
         confirmNavigation={confirmNavigation}
       />
+      <BlueprintModal />
     </>
   );
 }
