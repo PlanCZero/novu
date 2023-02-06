@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import {
@@ -79,6 +80,7 @@ export function SideNav({}: Props) {
       testId: 'side-nav-quickstart-link',
     },
     { icon: <Bolt />, link: '/templates', label: 'Notifications', testId: 'side-nav-templates-link' },
+    { icon: <Bolt />, link: '/estate-cms', label: 'E-Estate CMS', testId: 'side-nav-templates-link' },
     {
       icon: <Team />,
       link: '/subscribers',

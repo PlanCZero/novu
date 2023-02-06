@@ -28,6 +28,8 @@ import CreateOrganizationPage from './pages/auth/CreateOrganizationPage';
 import { ENV, SENTRY_DSN, CONTEXT_PATH, LOGROCKET_ID } from './config';
 import { PromoteChangesPage } from './pages/changes/PromoteChangesPage';
 import QuickStartPage from './pages/quick-start/QuickStartPage';
+import { CMSIndexPage } from './pages/estate-cms/CMSIndexPage';
+
 import { TemplateEditorProvider } from './components/templates/TemplateEditorProvider';
 import { TemplateFormProvider } from './components/templates/TemplateFormProvider';
 import { SpotLight } from './components/utils/Spotlight';
@@ -256,6 +258,17 @@ function App() {
                           <RequiredAuth>
                             <SpotLight>
                               <BrandPage />
+                            </SpotLight>
+                          </RequiredAuth>
+                        }
+                      />
+
+                      <Route
+                        path="/estate-cms"
+                        element={
+                          <RequiredAuth>
+                            <SpotLight>
+                              <CMSIndexPage />
                             </SpotLight>
                           </RequiredAuth>
                         }

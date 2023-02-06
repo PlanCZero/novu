@@ -4,7 +4,7 @@
   "packageManager": "pnpm@7.5.0",
   "scripts": {
     "bootstrap": "npm run setup:dev",
-    "start": "npm run jarvis",
+    "start": "npm run --max_old_space_size=4096 jarvis",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "publish": "lerna publish from-package",
