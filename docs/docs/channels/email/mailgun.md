@@ -8,7 +8,7 @@ You can use the [Mailgun](https://mailgun.com/) provider to send transactional e
 
 ## Getting Started
 
-To use the Mailgun channel, you will need to create a Mailgun account and add your API key and domain name to the Mailgun integration on the Novu platform.
+To use the Mailgun provider in the email channel, you will need to create a Mailgun account and add your API key and domain name to the Mailgun integration on the Novu platform.
 
 ## Generate API Key
 
@@ -35,7 +35,7 @@ Mailgun recommends that you add a subdomain as a domain name. To do so:
   - For domains created in the EU region, the base URL is: `https://api.eu.mailgun.net/`
   - Otherwise, leave the base URL blank.
 - Fill the `Username`.
-- Fill the `Domain name` registered on Mailgun .
+- Fill the `Domain name` registered on Mailgun.
 - Fill the `From email address` field using the authenticated email from the previous step.
 - Fill the `Sender name`.
 - Click on the `Disabled` button and mark as `Active`.

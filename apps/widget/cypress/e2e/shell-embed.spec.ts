@@ -76,7 +76,11 @@ describe('Shell Embed - Seen Read', function () {
       token: this.session.token,
       subscriberId: this.session.subscriber.subscriberId,
       count: 5,
+      organizationId: this.session.organization._id,
+      templateId: this.session.templates[0]._id,
     });
+
+    cy.waitForNetworkIdle(500);
 
     cy.get('#notification-bell').click();
 
@@ -128,6 +132,8 @@ describe('Shell Embed - Seen Read', function () {
       token: this.session.token,
       subscriberId: this.session.subscriber.subscriberId,
       count: 5,
+      organizationId: this.session.organization._id,
+      templateId: this.session.templates[0]._id,
     });
 
     cy.get('#notification-bell').click();
