@@ -1,12 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CredentialsKeyEnum, ChannelTypeEnum } from '@novu/shared';
+import { ChannelTypeEnum, CredentialsKeyEnum, EmailProviderIdEnum } from '@novu/shared';
 
 import { ConnectIntegrationForm } from './ConnectIntegrationForm';
 import { TestWrapper } from '../../../testing';
 import { IIntegratedProvider } from '../IntegrationsStorePage';
 
 const exampleProvider: IIntegratedProvider = {
-  providerId: 'emailjs',
+  providerId: EmailProviderIdEnum.EmailJS,
   active: false,
   channel: ChannelTypeEnum.EMAIL,
   betaVersion: false,
@@ -110,7 +110,7 @@ it('shows the configuration for the selected provider', () => {
   cy.get(`img[alt="emailjs image"]`)
     .then((e) => e.attr('src'))
     .should('match', /.*emailjs\.svg$/);
-  cy.get('a').should('have.text', 'here.').and('have.attr', 'href', 'https://www.emailjs.com/docs');
+  cy.get('a').should('have.text', 'our guide').and('have.attr', 'href', 'https://www.emailjs.com/docs');
 
   // We may use a for-loop here since order of checks is not important
   for (const cred of credentials) {

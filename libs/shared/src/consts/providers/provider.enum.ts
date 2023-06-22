@@ -25,6 +25,7 @@ export enum CredentialsKeyEnum {
   IgnoreTls = 'ignoreTls',
   TlsOptions = 'tlsOptions',
   RedirectUrl = 'redirectUrl',
+  Hmac = 'hmac',
 }
 
 export enum EmailProviderIdEnum {
@@ -45,6 +46,7 @@ export enum EmailProviderIdEnum {
   Outlook365 = 'outlook365',
   Novu = 'novu-email',
   SparkPost = 'sparkpost',
+  EmailWebhook = 'email-webhook',
 }
 
 export enum SmsProviderIdEnum {
@@ -64,6 +66,8 @@ export enum SmsProviderIdEnum {
   Kannel = 'kannel',
   Maqsam = 'maqsam',
   Termii = 'termii',
+  AfricasTalking = 'africas-talking',
+  Novu = 'novu-sms',
 }
 
 export enum ChatProviderIdEnum {
@@ -77,8 +81,17 @@ export enum PushProviderIdEnum {
   FCM = 'fcm',
   APNS = 'apns',
   EXPO = 'expo',
+  OneSignal = 'one-signal',
+  PushWebhook = 'push-webhook',
 }
 
 export enum InAppProviderIdEnum {
   Novu = 'novu',
 }
+
+export type ProvidersIdEnum =
+  | EmailProviderIdEnum
+  | SmsProviderIdEnum
+  | PushProviderIdEnum
+  | InAppProviderIdEnum
+  | ChatProviderIdEnum;
