@@ -85,7 +85,7 @@ export class SendMessage {
         };
       }
 
-      this.analyticsService.track('Process Workflow Step - [Triggers]', command.userId, {
+      this.analyticsService.mixpanelTrack('Process Workflow Step - [Triggers]', '', {
         _template: command.job._templateId,
         _organization: command.organizationId,
         _environment: command.environmentId,
@@ -215,7 +215,9 @@ export class SendMessage {
       _id: job._templateId,
       environmentId: job._environmentId,
     });
-    if (!template) throw new PlatformException(`Notification template ${job._templateId} is not found`);
+    if (!template) {
+      throw new PlatformException(`Notification template ${job._templateId} is not found`);
+    }
 
     if (template.critical || this.isActionStep(job)) {
       return true;
